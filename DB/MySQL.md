@@ -209,3 +209,67 @@
     GROUP BY DEPT_CODE
     HAVING AVG(SALARY) > 3000000
     ORDER BY 1;
+
+## SET OPERATION : SELECT의 결과를 합친다는 의미
+### UNION : 두 개 이상의 SELECT한 결과를 합친다 / 중복이 있을 경우 1번만 보여준다.
+### UNION ALL : 두 개 이상의 SELECT한 결과를 합친다 / 중복이 있을 경우 중복이 되는 내용 그대로 조회
+    
+### JOIN : 두 개 이상의 테이블을 공통적인 컬럼을 기준으로 하나로 합쳐 사용하는 명령 구문! 중요!
+    SELECT EMP_NAME, EMP_CODE, DEBT_CODE, DEPT_TITLE => JOIN되는 테이블에서 필요한 컬럼을 모두 가져올 수 있다.
+    FROM EMPLOYEE
+    JOIN DEPARTMENT ON(DEPT_CODE = DEPT_ID); => EMPLOYEE와 DEPARTMENT 두 테이블을 비교해서 DEPT_CODE가 DEPT_ID와 같은게 잇으면 붙이겠다 (붙일 때 메인은 DEPT_CODE)
+    
+    SELECT EMP_ID, EMP_NAME, JOB_CODE, JOB_NAME
+    FROM EMPLOYEE
+    JOIN JOB USING(JOB_CODE); => USING을 사용해 공통 컬럼을 쉽게 나타낼 수 있다.
+
+### INNER JOIN : 조건에 만족하는 데이터만 선택
+    SELECT DEPT_CODE, DEPT_TITLE
+    FROM EMPLOYEE
+    JOIN DEPARTMENT ON(DEPT_CODE = DEPT_TITLE)
+
+### LEFT OUTER JOIN : 왼쪽테이블(FROM에 속하는 테이블)에만 있고 오른쪽엔 없더라도 유지한다
+### RIGHT OUTER JOIN : 오른쪽테이블(JOIN에 속하는 테이블)에만 있고 왼쪽엔 없더라도 유지한다
+
+## JOIN 계열의 ON() 안에는 계산식,함수식,AND,OR, 조건식 등 다양한 표현식을 넣을 수 있다.
+### SELF JOIN 자기 자신을 조인
+    SELECT E.EMP_ID 사번, E.EMP_NAME 사원명, E.MANAGER_ID "관리자 사번", M.EMP_NAME "관리자명"
+    FROM EMPLOYEE E
+    JOIN EMPLOYEE M ON (E.MANAGER_ID = M.EMP_ID); -- MANAGER_ID와 EMP_ID가 같은 값을 이어붙인다
+### 다중 JOIN -매우중요! : 여러 개의 테이블을 JOIN하는 것, JOIN하는 테이블의 순서가 매우 중요하다
+
+### SUB QUERY : 메인 쿼리 안에 조건이나 검색을 위한 다른 쿼리를 추가하는 기법 (쿼리 안에 쿼리 , SELECT문 안에 SELECT문을 의미)
+    서브쿼리의 결과값에 따라 
+    1. 단일 행 서브쿼리 
+    2. 다중 행 서브쿼리 
+    3. 대중 행 다중 열 서브쿼리
+
+### INLINE VIEW : FROM문에 위치하는 서브쿼리 => 서브쿼리의 결과값을 테이블로서 사용가능!!!
+    EX)
+    SELECT EMP_ID , DEPT_TITLE
+    FROM (
+	      SELECT EMP_ID, EMP_NAME, DEPT_TITLE, JOB_NAME
+	      FROM EMPLOYEE e
+	      JOIN DEPARTMENT d ON(DEPT_CODE = DEPT_ID)
+	      JOIN JOB USING(JOB_CODE)
+	      ) T; -- 서브쿼리의 별칭을 T라고 지정. INLINE VIEW에선 반드시 필요
+
+### RANK() : 순번을 매기는 함수이며, 동일한 순번이 있을 경우 이후의 순번은 건너뛴다 (1, 2, 2, 3, 4...)
+### DENSE_RANK() : 동일한 순번이 있을 경우 이후 순번에 영향을 미치지 않는다 (1, 2, 2, 3, 4...)
+### ROW_NUMBER() : 동일 순번은 무시 (1, 2, 3, 4...)
+
+### CREATE : 데이터 베이스의 객체를 생성하는 DDL : [사용형식] CREATE 객체종류 객체명 (각 객체와 관련된 관련 문법,내용)
+    CREATE TABLE : 데이터를 저장하기 위한 틀(객체), 데이터를 2차원의 표 형태로 담을 수 있는 객체
+
+    제약조건 (CONSTRANITS) : 테이블 생성시 컬럼에 값을 기록하는 것에 대한 제약사항을 설정
+    NOT NULL : 해당 컬럼에는 NULL 값을 허용하지 않는다
+    UNIQUE : 중복값 허용하지 않는다. EX) 회원가입시 아이디 중복제한
+    CHECK : 지정한 입력 사항 외에는 기록하지 못한다 EX)ENT_YN => Y OR N만 입력 가능하게끔!
+    PRIMARY KEY : NOT NULL + UNIQUE : 테이블내에서 해당 행을 인식할 수 있는 고유값
+    FOREIGN KEY : 다른 테이블에서 저장된 값을 연결 지어서 참조로 가져오는 데이터에 지정하는 제약조건
+
+    CREATE TABLE USER_NOT_NULL(
+	USER_NO INT NOT NULL,
+	USER_IN VARCHAR(20) NOT NULL,
+	USER_PW VARCHAR(20) NOT NULL }; => 이런 형태로 사용
+
