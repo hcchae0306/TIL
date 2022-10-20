@@ -1,0 +1,46 @@
+# 핵심은 JVM(JAVA)와 DB(MySQL)의 연결
+
+## 드라이버 등록
+-이 작업을 통해 내가 사용하는 DB의 드라이버와 연결한다.
+
+    Class.forName("내가 사용하는 드라이버 주소");
+    => 이때 반드시 try-catch 필요
+
+## dbms연결
+-Connection을 활용해 본격적으로 연결한다 
+
+    String url = "jdbc:mysql://localhost:3306/multi";   
+    String id = "root";   
+    String pw = "1234";
+    => 미리 url, id, pw를 선언해 전역변수,메소드변수가 되도록 한다		
+
+    Connection con = null;
+    => try-catch문 밖에서도 con활용하기 위해서 미리 선언을 해둔다! 
+	 	
+		try {
+			con = DriverManager.getConnection(url,id,pw);
+            =>DriverManger와 미리 입력한 url,id,pw로 연결
+
+			con.setAutoCommit(false);
+		} catch (SQLException e) {
+			System.out.println("[에러] 연결실패");
+			e.printStackTrace();
+		}
+		
+		return con;
+        => 연결한 객체를 결과로! 중요!
+        ==> 이 con객체를 통해 연결된 db에 조회 등록 삭제 수정 등 작업 수행
+
+## 연결해제
+-연결과 수정,등록 등 작업을 위해 만든 Connection, Statement, PreparedStatement
+등의 연결을 해제한다
+
+        Close(con);
+        Close(stmt);
+        Close(pstm);
+
+## executeQuery VS executeUpdate
+
+    exectueQuery : SELECT문 (조회)에서만 사용
+    exectueUpdate : SELECT문 이외 등록,수정,삭제 등에서 사용
+
