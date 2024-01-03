@@ -44,9 +44,7 @@
     String line = br.readLine();
     System.out.println("You entered: " + line);
     ```
-    line에는 "Hello World"가 그대로 들어가게 됩니다.
-
-
+    line에는 "Hello World"가 그대로 들어가게 됩니다.      
 
     Scanner: 기본적으로 공백 문자를 구분자로 사용하여 데이터를 읽습니다. 이로 인해 단어 단위로 데이터를 분리할 수 있습니다.
 
