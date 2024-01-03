@@ -9,7 +9,7 @@
   [PuTTY](https://github.com/hcchae0306/TIL/blob/master/TOOL%20.%20PROGRAM/PuTTY.md)
 
   ## JAVA
-  [BufferedReader]
+  [BufferedReader](https://github.com/hcchae0306/TIL/blob/master/JAVA/BufferedReader.md)
 
   ## MarkDown
-  [문법정리]
+  [문법정리](https://github.com/hcchae0306/TIL/blob/master/MarkDown/%EC%82%AC%EC%9A%A9%EB%B2%95.md)
