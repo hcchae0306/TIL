@@ -10,8 +10,8 @@
 
   ## JAVA
   2024.01.03  
-  [BufferedReader](https://github.com/hcchae0306/TIL/blob/master/JAVA/BufferedReader.md)
-  [StringTokenizer]
+  [BufferedReader](https://github.com/hcchae0306/TIL/blob/master/JAVA/BufferedReader.md)  
+  [StringTokenizer](https://github.com/hcchae0306/TIL/blob/master/JAVA/StringTokenizer.md)
 
   ## MarkDown
   2024.01.03  
